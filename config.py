@@ -33,7 +33,7 @@ TOKEN = os.getenv('TOKEN')
 API_ID = os.getnv('API_ID')
 API_HASH = os.getenv('API_HASH')
 
-DEBUG = True
+DEBUG = False
 SERVER_URL = os.getenv("SERVER_URL")
 
 bot = Client(api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)

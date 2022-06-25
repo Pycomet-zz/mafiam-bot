@@ -31,7 +31,7 @@ logging.basicConfig(
 )
 
 TOKEN = os.getenv('TOKEN')
-API_ID = os.getnv('API_ID')
+API_ID = os.getenv('API_ID')
 API_HASH = os.getenv('API_HASH')
 
 DEBUG = False

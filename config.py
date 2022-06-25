@@ -37,5 +37,5 @@ API_HASH = os.getenv('API_HASH')
 DEBUG = False
 SERVER_URL = os.getenv("SERVER_URL")
 
-bot = telebot.TeleBot(token=Token)
+bot = telebot.TeleBot(token=TOKEN)
 app = Flask(__name__)

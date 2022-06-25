@@ -4,7 +4,7 @@ import os
 import re
 from flask import Flask, request
 from datetime import date
-import goslate
+from googletrans import Translator
 import telebot
 from telebot import types
 from aiotdlib import Client
@@ -21,7 +21,10 @@ LANGUAGE = user.language
 # # Language setup
 # os.environ["LANGUAGE"] = "en"
 # LANGUAGE = os.getenv("LANGUAGE")
-translator = goslate.Goslate()
+translator = Translator(service_urls=[
+    'translate.google.com',
+    'translate.google.co.kr',
+])
 
 # Logging Setup
 logging.basicConfig(

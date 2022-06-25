@@ -7,8 +7,6 @@ from datetime import date
 from googletrans import Translator
 import telebot
 from telebot import types
-from aiotdlib import Client
-from aiotdlib.api import UpdateNewMessage
 
 from dotenv import load_dotenv
 load_dotenv()

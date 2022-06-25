@@ -1,4 +1,3 @@
-aiotdlib==0.18.0
 certifi==2022.6.15
 chardet==3.0.4
 charset-normalizer==2.0.12

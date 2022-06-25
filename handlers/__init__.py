@@ -1,2 +1,2 @@
 from .language import *
-from start import *
+from .start import *

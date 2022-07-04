@@ -4,7 +4,7 @@ import os
 import re
 from flask import Flask, request
 from datetime import date
-from googletrans import Translator
+import goslate
 import telebot
 from telebot import types
 
@@ -19,10 +19,7 @@ LANGUAGE = user.language
 # # Language setup
 # os.environ["LANGUAGE"] = "en"
 # LANGUAGE = os.getenv("LANGUAGE")
-translator = Translator(service_urls=[
-    'translate.google.com',
-    'translate.google.co.kr',
-])
+translator = goslate.Goslate()
 
 # Logging Setup
 logging.basicConfig(
@@ -34,7 +31,7 @@ TOKEN = os.getenv('TOKEN')
 API_ID = os.getenv('API_ID')
 API_HASH = os.getenv('API_HASH')
 
-DEBUG = False
+DEBUG = True
 SERVER_URL = os.getenv("SERVER_URL")
 
 bot = telebot.TeleBot(token=TOKEN)

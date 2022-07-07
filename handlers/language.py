@@ -4,7 +4,7 @@ from utils import *
 def menu5():
     keyboard = types.InlineKeyboardMarkup(row_width=1)
     a = types.InlineKeyboardButton(text="English - EN", callback_data="en")
-    b = types.InlineKeyboardButton(text=get_string("Amharic - AM", "am"), callback_data="am")
+    b = types.InlineKeyboardButton(text=get_string("Chinese - ZH", "zh"), callback_data="zh")
     keyboard.add(a,b)
     return keyboard
 
@@ -30,9 +30,11 @@ def callback_answer(call):
 
     if call.data == "en":
         user.language = "en"
+        LANGUAGE = user.language
 
-    elif call.data == "am":
-        user.language = "am"
+    elif call.data == "zh":
+        user.language = "zh"
+        LANGUAGE = user.language
 
     else:
         pass

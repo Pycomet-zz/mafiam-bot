@@ -17,7 +17,8 @@ def startbot(msg):
 
     bot.send_photo(
         msg.from_user.id,
-        photo='https://ibb.co/nm9NTpZ',
+        photo='https://ibb.co/kxffVvt'
+        
     )
 
     bot.send_message(
@@ -33,3 +34,6 @@ def startbotn(msg):
     startbot(msg)
 
 
+
+
+# photo='https://ibb.co/nm9NTpZ',

@@ -32,9 +32,16 @@ def callback_answer(call):
         user.language = "en"
         LANGUAGE = user.language
 
+
     elif call.data == "zh":
         user.language = "zh"
         LANGUAGE = user.language
 
     else:
         pass
+
+
+    bot.send_message(
+        call.from_user.id,
+        get_string("Done", LANGUAGE)
+    )

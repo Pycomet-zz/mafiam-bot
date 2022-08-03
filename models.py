@@ -3,6 +3,7 @@ from dataclasses_json import dataclass_json, LetterCase
 
 from datetime import date
 
+
 @dataclass
 class User:
     "User Class Repr"
@@ -10,9 +11,7 @@ class User:
     language: str = "en"
 
 
-
-
-@dataclass_json(letter_case=LetterCase.CAMEL) ## To camel case in Json for exports
+@dataclass_json(letter_case=LetterCase.CAMEL)  ## To camel case in Json for exports
 @dataclass
 class Account:
     "Account Model For Registering Users"

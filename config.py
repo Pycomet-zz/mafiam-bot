@@ -12,6 +12,7 @@ import pymongo
 
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 from models import User
@@ -26,13 +27,12 @@ translator = goslate.Goslate()
 
 # Logging Setup
 logging.basicConfig(
-    format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-    level=logging.INFO
+    format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s", level=logging.INFO
 )
 
-TOKEN = os.getenv('TOKEN')
-API_ID = os.getenv('API_ID')
-API_HASH = os.getenv('API_HASH')
+TOKEN = os.getenv("TOKEN")
+API_ID = os.getenv("API_ID")
+API_HASH = os.getenv("API_HASH")
 
 DEBUG = True
 SERVER_URL = os.getenv("SERVER_URL")

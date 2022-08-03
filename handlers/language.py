@@ -40,8 +40,3 @@ def callback_answer(call):
     else:
         pass
 
-
-    bot.send_message(
-        call.from_user.id,
-        get_string("Done", LANGUAGE)
-    )

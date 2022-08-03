@@ -4,7 +4,6 @@ from utils import *
 
 def start_menu():
     keyboard = types.InlineKeyboardMarkup(row_width=1)
-    # a = types.InlineKeyboardButton(text=get_string("Join Public Group", LANGUAGE), callback_data="public-group")
     a = types.InlineKeyboardButton(text=get_string("Visit Website", LANGUAGE), url="www.google.com" )
     keyboard.add(a)
     return keyboard

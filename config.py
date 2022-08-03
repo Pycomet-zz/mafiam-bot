@@ -7,6 +7,9 @@ from datetime import date
 import goslate
 import telebot
 from telebot import types
+from pymongo import MongoClient
+import pymongo
+
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -31,8 +34,12 @@ TOKEN = os.getenv('TOKEN')
 API_ID = os.getenv('API_ID')
 API_HASH = os.getenv('API_HASH')
 
-DEBUG = False
+DEBUG = True
 SERVER_URL = os.getenv("SERVER_URL")
+
+DATABASE_STRING = os.getenv("DATABASE_STRING")
+client = MongoClient(DATABASE_STRING)
+
 
 bot = telebot.TeleBot(token=TOKEN)
 app = Flask(__name__)

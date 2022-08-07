@@ -5,6 +5,7 @@ import re
 from flask import Flask, request
 from datetime import date
 import goslate
+from deep_translator import GoogleTranslator
 import telebot
 from telebot import types
 from pymongo import MongoClient
@@ -23,7 +24,8 @@ LANGUAGE = user.language
 # # Language setup
 # os.environ["LANGUAGE"] = "en"
 # LANGUAGE = os.getenv("LANGUAGE")
-translator = goslate.Goslate()
+translator = GoogleTranslator(source="auto")
+# translator = goslate.Goslate()
 
 # Logging Setup
 logging.basicConfig(

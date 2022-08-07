@@ -87,7 +87,10 @@ def get_secret_answer(msg):
     status = db_client.update_account(msg.from_user.id, {"secretAnswer": answer})
 
     if status == True:
-        user = db_client.get_account(msg.from_user.id)
+        user, u_id = db_client.get_account(msg.from_user.id)
+
+        ref_code = str(u_id)[:6]
+        db_client.update_account(msg.from_user.id, {"code": ref_code})
 
         bot.send_photo(msg.from_user.id, photo="https://ibb.co/nm9NTpZ")
         bot.send_message(

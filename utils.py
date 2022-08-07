@@ -1,19 +1,14 @@
 from config import *
-from models import Account
+from models import *
 
 
 def get_string(text: str, lang: str) -> str:
     "Return The Test In LangugaE String"
     try:
-        result = translator(text, lang)
+        result = translator.translate(text, target=lang)
         return result
     except:
         return text
-
-
-def generate_unique_code():
-    "Write An Algorithm To Generate A 6 Digit Code"
-    pass
 
 
 class DbClient:
@@ -22,10 +17,22 @@ class DbClient:
         res = client["mafiambot_db"][name]
         return res
 
-    def get_account(self, user_id):
+    def get_account(self, user_id: str):
         "Get Account Object"
         collection = self.get_collection("accounts")
-        result = collection.find_one({"userId": user_id})  # Checker
+        result = collection.find_one({"userId": int(user_id)})  # Checker
+        if result == None:
+            return None, _
+
+        # Get Obj
+        res = Account.from_dict(result)
+        return res, result['_id']
+ 
+
+    def get_account_by_ref(self, code: str) -> Referral or None:
+        "This fetched the user by referral code"
+        collection = self.get_collection("accounts")
+        result = collection.find_one({"code": code})  # Checker
         if result == None:
             return None
 
@@ -33,7 +40,7 @@ class DbClient:
         res = Account.from_dict(result)
         return res
 
-    def save_account(self, account: Account):
+    def save_account(self, account: Account) -> bool:
         "Saves Account Object To MongoDb"
 
         collection = self.get_collection("accounts")
@@ -48,10 +55,21 @@ class DbClient:
 
         return False
 
+    def save_ref(self, referral: Referral) -> bool:
+        "This Registers A New Referral"
+        try:
+            collection = self.get_collection("referrals")
+            data = referral.to_dict()
+            collection.insert_one(data)
+            return True
+
+        except Exception:
+            return False
+
     def update_account(self, user_id: int, data: object) -> bool:
         "Update A Certain Account"
 
-        user = self.get_account(user_id)
+        user, _ = self.get_account(user_id)
 
         if user == None:
             return False

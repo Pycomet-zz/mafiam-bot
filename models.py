@@ -22,3 +22,13 @@ class Account:
     secret_question: str = ""
     secret_answer: str = ""
     code: str = ""
+
+
+@dataclass_json(letter_case=LetterCase.CAMEL)
+@dataclass
+class Referral:
+    "Referral Model To Database"
+    user_id: int
+    ref_code: str
+    ref_user_id: int
+    status: str = "A"

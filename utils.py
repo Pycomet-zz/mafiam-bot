@@ -22,7 +22,7 @@ class DbClient:
         collection = self.get_collection("accounts")
         result = collection.find_one({"userId": int(user_id)})  # Checker
         if result == None:
-            return None, _
+            return None, None
 
         # Get Obj
         res = Account.from_dict(result)

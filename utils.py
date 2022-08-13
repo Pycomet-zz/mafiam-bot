@@ -26,8 +26,7 @@ class DbClient:
 
         # Get Obj
         res = Account.from_dict(result)
-        return res, result['_id']
- 
+        return res, result["_id"]
 
     def get_account_by_ref(self, code: str) -> Referral or None:
         "This fetched the user by referral code"

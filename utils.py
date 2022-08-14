@@ -10,6 +10,12 @@ def get_string(text: str, lang: str) -> str:
     except:
         return text
 
+def get_received_msg(msg):
+    "Delete This Message"
+    message_id = msg.message_id
+    chat = msg.chat
+    return chat, message_id
+
 
 class DbClient:
     def get_collection(self, name: str):

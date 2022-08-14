@@ -15,6 +15,9 @@ def gender_menu():
 def register_user(msg):
     "Register Msg Handler"
 
+    chat, m_id = get_received_msg(msg)
+    bot.delete_message(chat.id, m_id)
+
     bot.reply_to(
         msg,
         get_string(
@@ -43,6 +46,9 @@ def get_name(msg):
 
     isNew = db_client.save_account(account)
 
+    chat, m_id = get_received_msg(msg)
+    bot.delete_message(chat.id, m_id)
+
     if isNew:
         bot.send_photo(msg.from_user.id, photo="https://ibb.co/nm9NTpZ")
         bot.send_message(
@@ -59,6 +65,8 @@ def get_name(msg):
             get_string("You are already a registered member! Move along", LANGUAGE),
         )
 
+    
+
 
 def get_secret_question(msg):
     "Ask Secret Question"
@@ -67,6 +75,9 @@ def get_secret_question(msg):
     status = db_client.update_account(
         msg.from_user.id, {"secretQuestion": secret_question}
     )
+
+    chat, m_id = get_received_msg(msg)
+    bot.delete_message(chat.id, m_id)
 
     if status == True:
         bot.send_photo(msg.from_user.id, photo="https://ibb.co/nm9NTpZ")
@@ -85,6 +96,9 @@ def get_secret_answer(msg):
     answer = msg.text
 
     status = db_client.update_account(msg.from_user.id, {"secretAnswer": answer})
+
+    chat, m_id = get_received_msg(msg)
+    bot.delete_message(chat.id, m_id)
 
     if status == True:
         user, u_id = db_client.get_account(msg.from_user.id)

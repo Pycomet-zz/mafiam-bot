@@ -26,6 +26,9 @@ def start_menu(status: bool):
 def startbot(msg):
     "Ignites the bot application to take action"
 
+    chat, m_id = get_received_msg(msg)
+    bot.delete_message(chat.id, m_id)
+
     # check user in the database to see if they registered
     user, _ = db_client.get_account(msg.from_user.id)
 

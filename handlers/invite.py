@@ -8,6 +8,9 @@ def invitebot(msg):
 
     user, _ = db_client.get_account(msg.from_user.id)
 
+    chat, m_id = get_received_msg(msg)
+    bot.delete_message(chat.id, m_id)
+
     if user == None:
 
         bot.send_photo(msg.from_user.id, photo="https://ibb.co/kxffVvt")
@@ -36,6 +39,9 @@ def get_invite_code(msg):
 
     # validate ref_code
     user = db_client.get_account_by_ref(code=ref_code)
+
+    chat, m_id = get_received_msg(msg)
+    bot.delete_message(chat.id, m_id)
 
     if user == None:
         bot.send_message(

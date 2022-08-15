@@ -65,8 +65,6 @@ def get_name(msg):
             get_string("You are already a registered member! Move along", LANGUAGE),
         )
 
-    
-
 
 def get_secret_question(msg):
     "Ask Secret Question"

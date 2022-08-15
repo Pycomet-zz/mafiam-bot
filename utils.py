@@ -10,6 +10,7 @@ def get_string(text: str, lang: str) -> str:
     except:
         return text
 
+
 def get_received_msg(msg):
     "Delete This Message"
     message_id = msg.message_id

@@ -31,6 +31,23 @@ This is a community manager application bot. The coverage rages over a private v
 
 ## Project Resources
 
+## Running Locally
+
+## Deploying The Bot Application
+
+## Commands
+
+The following commans would be functional to users on the bot categorized by either being a registered user to the
+database (MongoDb Database)
+
+-- /start - This command welcomes a new user and let's them know where to register being their first attempt and otherwise give them the rooms they are registered into all by inline buttons to the welcome message.
+
+-- /invitecode - This command on first attempt prompts for the user's referrer code and if the user is registered, returns their unique code for invites.
+
+-- /register - This command directly preceeds the /invitecode system and here the user picks a username, secret question and answer which would be used to access the web portal.
+
+-- /language - This command is aimed at aiding the user change a bot messages to a preferred language other than the default english.
+
 <!-- AUTHOR -->
 
 ## Author

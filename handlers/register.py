@@ -15,8 +15,8 @@ def gender_menu():
 def register_user(msg):
     "Register Msg Handler"
 
-    chat, m_id = get_received_msg(msg)
-    bot.delete_message(chat.id, m_id)
+    # chat, m_id = get_received_msg(msg)
+    # bot.delete_message(chat.id, m_id)
 
     bot.reply_to(
         msg,

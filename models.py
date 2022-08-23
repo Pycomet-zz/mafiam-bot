@@ -32,3 +32,13 @@ class Referral:
     ref_code: str
     ref_user_id: int
     status: str = "A"
+
+
+@dataclass_json(letter_case=LetterCase.CAMEL)
+@dataclass
+class Room:
+    "Room Criteria Model In Database"
+    owner_id: int
+    group_id: int
+    display_image: str = ""
+    description: str = ""

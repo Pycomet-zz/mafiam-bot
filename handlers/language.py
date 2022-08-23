@@ -22,21 +22,21 @@ def startRef(msg):
     )
 
 
-# # Callback Handlers
-# @bot.callback_query_handler(func=lambda call: True)
-# def callback_answer(call):
-#     """
-#     Button Response
-#     """
+# Callback Handlers
+@bot.callback_query_handler(func=lambda call: True)
+def lang_callback_answer(call):
+    """
+    Button Response
+    """
 
-#     if call.data == "en":
-#         user.language = "en"
-#         LANGUAGE = user.language
+    if call.data == "en":
+        user.language = "en"
+        LANGUAGE = user.language
 
 
-#     elif call.data == "zh":
-#         user.language = "zh"
-#         LANGUAGE = user.language
+    elif call.data == "zh":
+        user.language = "zh"
+        LANGUAGE = user.language
 
-#     else:
-#         pass
+    else:
+        pass

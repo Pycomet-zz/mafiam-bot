@@ -48,6 +48,12 @@ database (MongoDb Database)
 
 -- /language - This command is aimed at aiding the user change a bot messages to a preferred language other than the default english.
 
+## Uploaded Images
+
+https://ibb.co/pfHDP4v
+
+https://ibb.co/nm9NTpZ
+
 <!-- AUTHOR -->
 
 ## Author

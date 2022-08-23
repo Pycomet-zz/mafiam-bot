@@ -42,7 +42,7 @@ def get_name(msg):
     if name == "":
         name = msg.from_user.first_name
 
-    account = Account(name, int(msg.from_user.id))
+    account = Account(name, int(msg.from_user.id), account_type="受付中")
 
     isNew = db_client.save_account(account)
 

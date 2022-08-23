@@ -21,6 +21,7 @@ class Account:
     lang: str = "en"
     secret_question: str = ""
     secret_answer: str = ""
+    account_type: str = ""
     code: str = ""
 
 
@@ -40,5 +41,22 @@ class Room:
     "Room Criteria Model In Database"
     owner_id: int
     group_id: int
+    name: str
     display_image: str = ""
     description: str = ""
+    access_code: str = ""
+
+
+
+@dataclass_json(letter_case=LetterCase.CAMEL)
+@dataclass
+class ProductItem:
+    "Product Items Identifiable to Their Respective Rooms"
+    
+    room_id: int
+    item_id: str
+    cost: int = 0
+    discount: int = 0
+    quantity_available: int = 0
+    created_date: str = ""
+

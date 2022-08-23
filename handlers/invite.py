@@ -13,12 +13,10 @@ def invitebot(msg):
 
     if user == None:
 
-        bot.send_photo(msg.from_user.id, photo="https://ibb.co/kxffVvt")
-
         question = bot.send_message(
             msg.from_user.id,
             get_string(
-                "Please enter your invite code here ? (If you have no code, use 000000)",
+                "Please enter your invite code here ? ",
                 LANGUAGE,
             ),
         )
@@ -71,6 +69,8 @@ def get_invite_code(msg):
             )
 
         else:
+            bot.send_photo(msg.from_user.id, photo="https://ibb.co/pfHDP4v")
+
             bot.send_message(
                 msg.from_user.id,
                 get_string(

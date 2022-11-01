@@ -29,6 +29,7 @@ def startbot(msg):
     chat, m_id = get_received_msg(msg)
     bot.delete_message(chat.id, m_id)
 
+    bot.send_chat_action(msg.from_user.id, "typing")
     # check user in the database to see if they registered
     user, _ = db_client.get_account(msg.from_user.id)
 
@@ -48,10 +49,14 @@ def startbot(msg):
         bot.send_message(
             msg.from_user.id,
             get_string(
-                "Welcome To The Registration Bot. Get Yourself familiar by joining the invite room for more info and news update.",
+                f"Welcome Back <b>{user.nickname}</b>,\n\nHere are the bot commands available to your {user.account_type} account.\
+                    \n- /start to open default menu\n- /invitecode to activate your referral code using an existing user's referral\
+                        \n- /register to <b>register</b> new users to the system\n- /lang to change the default language\
+                            \n- /referrals evaluates your referral score\n\nGet Yourself familiar by joining the invite room for more info and news update.",
                 LANGUAGE,
             ),
             reply_markup=start_menu(True),
+            parse_mode="html",
         )
 
 

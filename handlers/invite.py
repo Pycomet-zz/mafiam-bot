@@ -11,6 +11,8 @@ def invitebot(msg):
     chat, m_id = get_received_msg(msg)
     bot.delete_message(chat.id, m_id)
 
+    bot.send_chat_action(msg.from_user.id, "typing")
+
     if user == None:
 
         question = bot.send_message(
@@ -40,6 +42,8 @@ def get_invite_code(msg):
 
     chat, m_id = get_received_msg(msg)
     bot.delete_message(chat.id, m_id)
+
+    bot.send_chat_action(msg.from_user.id, "typing")
 
     if user == None:
         bot.send_message(

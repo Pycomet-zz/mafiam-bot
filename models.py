@@ -47,16 +47,14 @@ class Room:
     access_code: str = ""
 
 
-
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
 class ProductItem:
     "Product Items Identifiable to Their Respective Rooms"
-    
+
     room_id: int
     item_id: str
     cost: int = 0
     discount: int = 0
     quantity_available: int = 0
     created_date: str = ""
-

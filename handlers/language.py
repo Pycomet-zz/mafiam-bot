@@ -23,12 +23,13 @@ def startRef(msg):
 
 
 # Callback Handlers
-@bot.callback_query_handler(func=lambda c: c.data in ['en', 'zh'])
+@bot.callback_query_handler(func=lambda c: c.data in ["en", "zh"])
 def lang_callback_answer(call):
     """
     Button Response
     """
-    print("cling")
+
+    bot.send_chat_action(call.from_user.id, "typing")
 
     if call.data == "en":
         user.language = "en"

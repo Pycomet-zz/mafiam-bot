@@ -15,22 +15,24 @@ def gender_menu():
 def register_user(msg):
     "Register Msg Handler"
 
-    # chat, m_id = get_received_msg(msg)
-    # bot.delete_message(chat.id, m_id)
+    chat, m_id = get_received_msg(msg)
+    bot.delete_message(chat.id, m_id)
+    bot.send_chat_action(msg.from_user.id, "typing")
 
-    bot.reply_to(
-        msg,
+    bot.send_message(
+        msg.from_user.id,
         get_string(
             "Getting registered to this bot is pretty simple, following the steps of the questions below;",
             LANGUAGE,
         ),
     )
 
-    bot.send_photo(msg.from_user.id, photo="https://ibb.co/nm9NTpZ")
-
-    question = bot.send_message(
-        msg.from_user.id, get_string("Please input your nickname ?", LANGUAGE)
+    question = bot.send_photo(
+        msg.from_user.id,
+        photo="https://ibb.co/nm9NTpZ",
+        caption=get_string("Input your nickname here 👇", LANGUAGE),
     )
+
     bot.register_next_step_handler(question, get_name)
 
 
@@ -49,21 +51,20 @@ def get_name(msg):
     chat, m_id = get_received_msg(msg)
     bot.delete_message(chat.id, m_id)
 
+    bot.send_chat_action(msg.from_user.id, "typing")
+
     if isNew:
-        bot.send_photo(msg.from_user.id, photo="https://ibb.co/nm9NTpZ")
-        bot.send_message(
+        bot.send_photo(
             msg.from_user.id,
-            get_string(
-                "Please select your gender from the following options", LANGUAGE
-            ),
+            photo="https://ibb.co/nm9NTpZ",
+            caption=get_string("Pick your gender from the options below 👇", LANGUAGE),
             reply_markup=gender_menu(),
         )
 
     else:
         bot.send_message(
             msg.from_user.id,
-            get_string(
-                "You are already a registered member! Move along", LANGUAGE),
+            get_string("You are already a registered member! Move along", LANGUAGE),
         )
 
 
@@ -78,27 +79,33 @@ def get_secret_question(msg):
     chat, m_id = get_received_msg(msg)
     bot.delete_message(chat.id, m_id)
 
-    if status == True:
-        bot.send_photo(msg.from_user.id, photo="https://ibb.co/nm9NTpZ")
+    bot.send_chat_action(msg.from_user.id, "typing")
 
-        question = bot.send_message(
+    if status == True:
+        question = bot.send_photo(
             msg.from_user.id,
-            get_string(
-                f"Please enter the answer to your secret question - {secret_question} ?",
+            photo="https://ibb.co/nm9NTpZ",
+            caption=get_string(
+                f"Enter the answer to your secret question👇 \n(📌 write in a safe place)</b>\n<b>{secret_question}</b> ?",
                 LANGUAGE,
             ),
+            parse_mode="html",
         )
+
         bot.register_next_step_handler(question, get_secret_answer)
 
 
 def get_secret_answer(msg):
     answer = msg.text
 
-    status = db_client.update_account(
-        msg.from_user.id, {"secretAnswer": answer})
+    bot.send_chat_action(msg.from_user.id, "typing")
+
+    status = db_client.update_account(msg.from_user.id, {"secretAnswer": answer})
 
     chat, m_id = get_received_msg(msg)
     bot.delete_message(chat.id, m_id)
+
+    bot.send_chat_action(msg.from_user.id, "upload_document")
 
     if status == True:
         user, u_id = db_client.get_account(msg.from_user.id)
@@ -106,35 +113,42 @@ def get_secret_answer(msg):
         ref_code = str(u_id)[:6]
         db_client.update_account(msg.from_user.id, {"code": ref_code})
 
-        bot.send_photo(msg.from_user.id, photo="https://ibb.co/nm9NTpZ")
-        bot.send_message(
+        bot.send_photo(
             msg.from_user.id,
-            get_string(f"Welcome to the club {user.nickname}!", LANGUAGE),
+            photo="https://ibb.co/nm9NTpZ",
+            caption=get_string(
+                f"🎉<b>Welcome to MAFIAM CLUB {user.nickname},🎉 \n\nClick /start to get started exploring...</b>",
+                LANGUAGE,
+            ),
+            parse_mode="html",
         )
 
 
 # Callback Handlers
-@bot.callback_query_handler(func=lambda c: c.data in ['male', 'female'])
+@bot.callback_query_handler(func=lambda c: c.data in ["male", "female"])
 def button_callback_answer(call):
     """
     Button Response
     """
 
-    print("caller")
+    bot.send_chat_action(call.from_user.id, "typing")
     # ADDING THE GENDER
     if call.data == "male" or call.data == "female":
 
-        status = db_client.update_account(
-            call.from_user.id, {"sex": call.data})
+        status = db_client.update_account(call.from_user.id, {"sex": call.data})
 
         if status == True:
-            question = bot.send_message(
+
+            question = bot.send_photo(
                 call.from_user.id,
-                get_string(
-                    "Please enter your own custom secret question ? (NOTE:- This must remain exclusively hidden to you alone)",
+                photo="https://ibb.co/nm9NTpZ",
+                caption=get_string(
+                    f"Enter your own custom secret question here👇 \n<b>(📌 write in a safe place)</b>\n<b>(📌 This question remains exclusive to you alone)</b>",
                     LANGUAGE,
                 ),
+                parse_mode="html",
             )
+
             bot.register_next_step_handler(question, get_secret_question)
 
     else:

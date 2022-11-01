@@ -17,6 +17,7 @@ def register_user(msg):
 
     chat, m_id = get_received_msg(msg)
     bot.delete_message(chat.id, m_id)
+
     bot.send_chat_action(msg.from_user.id, "typing")
 
     bot.send_message(
@@ -40,6 +41,10 @@ def get_name(msg):
     "Ask the gender of the user"
 
     name = msg.text
+    chat, m_id = get_received_msg(msg)
+
+    # Delete prev question
+    bot.delete_message(chat.id, m_id - 1)
 
     if name == "":
         name = msg.from_user.first_name
@@ -48,7 +53,6 @@ def get_name(msg):
 
     isNew = db_client.save_account(account)
 
-    chat, m_id = get_received_msg(msg)
     bot.delete_message(chat.id, m_id)
 
     bot.send_chat_action(msg.from_user.id, "typing")
@@ -57,39 +61,42 @@ def get_name(msg):
         bot.send_photo(
             msg.from_user.id,
             photo="https://ibb.co/nm9NTpZ",
-            caption=get_string("Pick your gender from the options below 👇", LANGUAGE),
-            reply_markup=gender_menu(),
+            caption=get_string(
+                "Pick your gender from the options below 👇", LANGUAGE),
+            reply_markup=gender_menu()
         )
 
     else:
         bot.send_message(
             msg.from_user.id,
-            get_string("You are already a registered member! Move along", LANGUAGE),
+            get_string(
+                "You are already a registered member! Move along", LANGUAGE),
         )
 
 
 def get_secret_question(msg):
     "Ask Secret Question"
     secret_question = msg.text
+    chat, m_id = get_received_msg(msg)
+
+    # Delete prev question
+    bot.delete_message(chat.id, m_id - 1)
 
     status = db_client.update_account(
         msg.from_user.id, {"secretQuestion": secret_question}
     )
 
-    chat, m_id = get_received_msg(msg)
     bot.delete_message(chat.id, m_id)
 
     bot.send_chat_action(msg.from_user.id, "typing")
 
     if status == True:
-        question = bot.send_photo(
+        question = bot.send_message(
             msg.from_user.id,
-            photo="https://ibb.co/nm9NTpZ",
-            caption=get_string(
-                f"Enter the answer to your secret question👇 \n(📌 write in a safe place)</b>\n<b>{secret_question}</b> ?",
-                LANGUAGE,
-            ),
-            parse_mode="html",
+            get_string(
+                f"Enter the answer to your secret question👇 ",
+                LANGUAGE
+            )
         )
 
         bot.register_next_step_handler(question, get_secret_answer)
@@ -97,12 +104,16 @@ def get_secret_question(msg):
 
 def get_secret_answer(msg):
     answer = msg.text
+    chat, m_id = get_received_msg(msg)
+
+    # Delete prev question
+    bot.delete_message(chat.id, m_id - 1)
 
     bot.send_chat_action(msg.from_user.id, "typing")
 
-    status = db_client.update_account(msg.from_user.id, {"secretAnswer": answer})
+    status = db_client.update_account(
+        msg.from_user.id, {"secretAnswer": answer})
 
-    chat, m_id = get_received_msg(msg)
     bot.delete_message(chat.id, m_id)
 
     bot.send_chat_action(msg.from_user.id, "upload_document")
@@ -135,7 +146,13 @@ def button_callback_answer(call):
     # ADDING THE GENDER
     if call.data == "male" or call.data == "female":
 
-        status = db_client.update_account(call.from_user.id, {"sex": call.data})
+        import pdb
+        pdb.set_trace()
+        # Delete prev question
+        bot.delete_message(call.from_user.id, call.message.message_id)
+
+        status = db_client.update_account(
+            call.from_user.id, {"sex": call.data})
 
         if status == True:
 

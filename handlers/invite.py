@@ -36,11 +36,14 @@ def invitebot(msg):
 
 def get_invite_code(msg):
     ref_code = msg.text
+    chat, m_id = get_received_msg(msg)
+
+    # Delete prev question
+    bot.delete_message(chat.id, m_id - 1)
 
     # validate ref_code
     user = db_client.get_account_by_ref(code=ref_code)
 
-    chat, m_id = get_received_msg(msg)
     bot.delete_message(chat.id, m_id)
 
     bot.send_chat_action(msg.from_user.id, "typing")

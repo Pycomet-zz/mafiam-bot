@@ -1,3 +1,4 @@
+from models import User
 import asyncio
 import logging
 import os
@@ -16,7 +17,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from models import User
 
 user = User
 LANGUAGE = user.language

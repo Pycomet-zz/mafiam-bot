@@ -5,8 +5,8 @@ from models import Account
 
 def gender_menu():
     keyboard = types.InlineKeyboardMarkup(row_width=2)
-    a = types.InlineKeyboardButton(text="🚹", callback_data="male")
-    b = types.InlineKeyboardButton(text="🚺", callback_data="female")
+    a = types.InlineKeyboardButton(text="🚹  Male", callback_data="male")
+    b = types.InlineKeyboardButton(text="🚺 Female", callback_data="female")
     keyboard.add(a, b)
     return keyboard
 
@@ -62,7 +62,8 @@ def get_name(msg):
     else:
         bot.send_message(
             msg.from_user.id,
-            get_string("You are already a registered member! Move along", LANGUAGE),
+            get_string(
+                "You are already a registered member! Move along", LANGUAGE),
         )
 
 
@@ -93,7 +94,8 @@ def get_secret_question(msg):
 def get_secret_answer(msg):
     answer = msg.text
 
-    status = db_client.update_account(msg.from_user.id, {"secretAnswer": answer})
+    status = db_client.update_account(
+        msg.from_user.id, {"secretAnswer": answer})
 
     chat, m_id = get_received_msg(msg)
     bot.delete_message(chat.id, m_id)
@@ -112,16 +114,18 @@ def get_secret_answer(msg):
 
 
 # Callback Handlers
-@bot.callback_query_handler(func=lambda call: True)
+@bot.callback_query_handler(func=lambda c: c.data in ['male', 'female'])
 def button_callback_answer(call):
     """
     Button Response
     """
 
+    print("caller")
     # ADDING THE GENDER
     if call.data == "male" or call.data == "female":
 
-        status = db_client.update_account(call.from_user.id, {"sex": call.data})
+        status = db_client.update_account(
+            call.from_user.id, {"sex": call.data})
 
         if status == True:
             question = bot.send_message(
@@ -134,4 +138,5 @@ def button_callback_answer(call):
             bot.register_next_step_handler(question, get_secret_question)
 
     else:
+        print("invalid callback passed")
         pass

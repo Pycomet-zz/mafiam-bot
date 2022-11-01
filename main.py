@@ -13,6 +13,7 @@ def checkWebhook():
 
 @app.route("/")
 def webhook():
+    print("Trial")
     bot.remove_webhook()
     bot.set_webhook(url=SERVER_URL + "/" + TOKEN)
     return "Application running!", 200
@@ -21,8 +22,8 @@ def webhook():
 if __name__ == "__main__":
 
     if DEBUG != True:
-        app.run(host="0.0.0.0", threaded=True, port=int(os.environ.get("PORT", 5000)))
+        app.run(host="0.0.0.0", threaded=True, port=5443, debug=True)
     else:
         bot.remove_webhook()
         print("Bot polling!")
-        bot.polling()
+        bot.infinity_polling()

@@ -145,9 +145,6 @@ def button_callback_answer(call):
     bot.send_chat_action(call.from_user.id, "typing")
     # ADDING THE GENDER
     if call.data == "male" or call.data == "female":
-
-        import pdb
-        pdb.set_trace()
         # Delete prev question
         bot.delete_message(call.from_user.id, call.message.message_id)
 

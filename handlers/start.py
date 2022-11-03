@@ -22,6 +22,25 @@ def start_menu(status: bool):
     return keyboard
 
 
+def start_menu2():
+    keyboard = types.InlineKeyboardMarkup(row_width=2)
+    a = types.InlineKeyboardButton(
+        text=get_string("Register Account", LANGUAGE), callback_data="register"
+    )
+    b = types.InlineKeyboardButton(
+        text=get_string("Share Invitation", LANGUAGE), callback_data="invite"
+    )
+    c = types.InlineKeyboardButton(
+        text=get_string("Contact Agent", LANGUAGE), callback_data="contact"
+    )
+    d = types.InlineKeyboardButton(
+        text=get_string("Go Back", LANGUAGE), callback_data="back"
+    )
+    keyboard.add(a, b, c, d)
+    return keyboard
+
+
+@bot.message_handler(regexp='Start')
 @bot.message_handler(commands=["start"])
 def startbot(msg):
     "Ignites the bot application to take action"
@@ -34,10 +53,10 @@ def startbot(msg):
     user, _ = db_client.get_account(msg.from_user.id)
 
     if user == None:
-
-        bot.send_message(
+        bot.send_photo(
             msg.from_user.id,
-            get_string(
+            photo="https://ibb.co/nm9NTpZ",
+            caption=get_string(
                 "You are not a registered user to this bot and as such, can not view it's content.\n\n Click /invitecode to validate your access with a referral code and have access to all the bot's commands.",
                 LANGUAGE,
             ),
@@ -46,17 +65,25 @@ def startbot(msg):
         )
 
     else:
-        bot.send_message(
+
+        bot.send_photo(
             msg.from_user.id,
-            get_string(
+            photo="https://ibb.co/nm9NTpZ",
+            caption=get_string(
                 f"Welcome Back <b>{user.nickname}</b>,\n\nHere are the bot commands available to your {user.account_type} account.\
-                    \n- /start to open default menu\n- /invitecode to activate your referral code using an existing user's referral\
-                        \n- /register to <b>register</b> new users to the system\n- /lang to change the default language\
-                            \n- /referrals evaluates your referral score\n\nGet Yourself familiar by joining the invite room for more info and news update.",
+                    \n- /start to open default menu\n\nGet Yourself familiar by joining the invite room for more info and news update.",
                 LANGUAGE,
             ),
             reply_markup=start_menu(True),
             parse_mode="html",
+        )
+
+        bot.send_video(
+            msg.from_user.id,
+            video=open("vid1.mp4", "rb"),
+            supports_streaming=True,
+            allow_sending_without_reply=True,
+            reply_markup=start_menu2()
         )
 
 

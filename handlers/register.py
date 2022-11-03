@@ -15,14 +15,16 @@ def gender_menu():
 def register_user(msg):
     "Register Msg Handler"
 
-    chat, m_id = get_received_msg(msg)
-    bot.delete_message(chat.id, m_id)
+    if hasattr(msg, "message_id"):
+        chat, m_id = get_received_msg(msg)
+        bot.delete_message(chat.id, m_id)
 
     bot.send_chat_action(msg.from_user.id, "typing")
 
-    bot.send_message(
+    bot.send_photo(
         msg.from_user.id,
-        get_string(
+        photo="https://ibb.co/nm9NTpZ",
+        caption=get_string(
             "Getting registered to this bot is pretty simple, following the steps of the questions below;",
             LANGUAGE,
         ),
@@ -30,7 +32,7 @@ def register_user(msg):
 
     question = bot.send_photo(
         msg.from_user.id,
-        photo="https://ibb.co/nm9NTpZ",
+        photo="https://ibb.co/mXBzyt8",
         caption=get_string("Input your nickname here 👇", LANGUAGE),
     )
 
@@ -60,10 +62,10 @@ def get_name(msg):
     if isNew:
         bot.send_photo(
             msg.from_user.id,
-            photo="https://ibb.co/nm9NTpZ",
+            photo="https://ibb.co/mXBzyt8",
             caption=get_string(
                 "Pick your gender from the options below 👇", LANGUAGE),
-            reply_markup=gender_menu()
+            reply_markup=gender_menu(),
         )
 
     else:
@@ -91,12 +93,11 @@ def get_secret_question(msg):
     bot.send_chat_action(msg.from_user.id, "typing")
 
     if status == True:
-        question = bot.send_message(
+        question = bot.send_photo(
             msg.from_user.id,
-            get_string(
-                f"Enter the answer to your secret question👇 ",
-                LANGUAGE
-            )
+            photo="https://ibb.co/mXBzyt8",
+            caption=get_string(
+                f"Enter the answer to your secret question👇 ", LANGUAGE),
         )
 
         bot.register_next_step_handler(question, get_secret_answer)
@@ -134,10 +135,16 @@ def get_secret_answer(msg):
             parse_mode="html",
         )
 
+        bot.send_photo(
+            msg.from_user.id,
+            photo="https://ibb.co/J3Q7Q8k",
+            allow_sending_without_reply=True,
+        )
+
 
 # Callback Handlers
 @bot.callback_query_handler(func=lambda c: c.data in ["male", "female"])
-def button_callback_answer(call):
+def register_callback_answer(call):
     """
     Button Response
     """
@@ -155,7 +162,7 @@ def button_callback_answer(call):
 
             question = bot.send_photo(
                 call.from_user.id,
-                photo="https://ibb.co/nm9NTpZ",
+                photo="https://ibb.co/mXBzyt8",
                 caption=get_string(
                     f"Enter your own custom secret question here👇 \n<b>(📌 write in a safe place)</b>\n<b>(📌 This question remains exclusive to you alone)</b>",
                     LANGUAGE,

@@ -3,21 +3,23 @@ from utils import *
 
 
 @bot.message_handler(commands=["invitecode"])
-def invitebot(msg):
+def invite_user(msg):
     "Ignites The Invite Code Assessment"
 
     user, _ = db_client.get_account(msg.from_user.id)
 
-    chat, m_id = get_received_msg(msg)
-    bot.delete_message(chat.id, m_id)
+    if hasattr(msg, "message_id"):
+        chat, m_id = get_received_msg(msg)
+        bot.delete_message(chat.id, m_id)
 
     bot.send_chat_action(msg.from_user.id, "typing")
 
     if user == None:
 
-        question = bot.send_message(
+        question = bot.send_photo(
             msg.from_user.id,
-            get_string(
+            photo="https://ibb.co/C6vztBZ",
+            caption=get_string(
                 "Please enter your invite code here ? ",
                 LANGUAGE,
             ),
@@ -27,10 +29,20 @@ def invitebot(msg):
     else:
         print(user)
 
-        bot.send_message(
+        bot.send_photo(
             msg.from_user.id,
-            get_string(f"Your referral code - <b>{user.code}</b>", LANGUAGE),
+            photo="https://ibb.co/C6vztBZ",
+            caption=get_string(
+                f"You are welcome to invite your friends and family to purchase and be part of our community. \n\nThis would certainly also build your account reputation in the community (⭐ )\n\n<b>Invitation Code - {user.code}</b>",
+                LANGUAGE
+            ),
             parse_mode="html",
+        )
+
+        bot.send_photo(
+            msg.from_user.id,
+            photo="https://ibb.co/J3Q7Q8k",
+            allow_sending_without_reply=True,
         )
 
 
@@ -49,12 +61,14 @@ def get_invite_code(msg):
     bot.send_chat_action(msg.from_user.id, "typing")
 
     if user == None:
-        bot.send_message(
+        bot.send_photo(
             msg.from_user.id,
-            get_string(
-                "Sorry, but you entered an invalid referral code. Click on /invitecode to try again...",
+            photo="https://ibb.co/nm9NTpZ",
+            caption=get_string(
+                "<b>You entered an invalid referral code.</b> \n\nClick on /invitecode to try again...",
                 LANGUAGE,
             ),
+            parse_mode="html"
         )
 
     else:
@@ -76,13 +90,19 @@ def get_invite_code(msg):
             )
 
         else:
-            bot.send_photo(msg.from_user.id, photo="https://ibb.co/pfHDP4v")
 
-            bot.send_message(
+            bot.send_photo(
                 msg.from_user.id,
-                get_string(
+                photo="https://ibb.co/pfHDP4v",
+                caption=get_string(
                     "<b>Congratulations! Welcome aboard</b> \n\n Click /register to get an account right away and join the chat forums for news update.",
                     LANGUAGE,
                 ),
                 parse_mode="html",
             )
+
+        bot.send_photo(
+            msg.from_user.id,
+            photo="https://ibb.co/J3Q7Q8k",
+            allow_sending_without_reply=True,
+        )

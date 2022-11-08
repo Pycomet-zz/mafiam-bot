@@ -11,6 +11,15 @@ def gender_menu():
     return keyboard
 
 
+def register_menu():
+    keyboard = types.InlineKeyboardMarkup(row_width=2)
+    a = types.InlineKeyboardButton(
+        text="同意して次へ (Agree and Continue)", callback_data="continue")
+    b = types.InlineKeyboardButton(text="辞める (Quit)", callback_data="quit")
+    keyboard.add(a, b)
+    return keyboard
+
+
 @bot.message_handler(commands=["register"])
 def register_user(msg):
     "Register Msg Handler"
@@ -25,18 +34,45 @@ def register_user(msg):
         msg.from_user.id,
         photo="https://ibb.co/nm9NTpZ",
         caption=get_string(
-            "Getting registered to this bot is pretty simple, following the steps of the questions below;",
+            "🤡<b><u>Agreement/Confirmation</u></b>",
             LANGUAGE,
         ),
+        parse_mode="html"
     )
 
-    question = bot.send_photo(
+    bot.send_chat_action(msg.from_user.id, "typing")
+    bot.send_photo(
         msg.from_user.id,
         photo="https://ibb.co/mXBzyt8",
-        caption=get_string("Input your nickname here 👇", LANGUAGE),
+        allow_sending_without_reply=True,
     )
 
-    bot.register_next_step_handler(question, get_name)
+    bot.send_message(
+        msg.from_user.id,
+        get_string("\n\n・We are a <b>secret jewelery store</b> that <u>mainly operates within the 23 wards of Tokyo</u> and allows local delivery. \
+            \n\n・This shop is a <u>invitation (introduction) only</u>, and <b>a membership service for good customers</b>. \
+            \n\n・With <b>military-level security</b>, <u>information sent from customers</u> will be It is <b>100% privacy guaranteed</b> as it is sent to a server in a legal country and all content is \
+            \n<b>securely</b> erased after the transaction is completed. All information that could lead to identification is not stored securely. \
+            \n\n・All customers are <u>selected by our own screening</u> and then invited to <b>excellent credit customers</b> and only <u>their referrals. </u> will be used. \
+            \n\n・In consideration of the safety of information leakage, customers who have been detained by arrest for various reasons, or who have not made transactions for a certain period of time, may be subject to temporary withdrawal by data separation. (It will be restored by contacting the customer.) \
+            \n\n・Due to the nature of the membership service, it is strictly prohibited to disclose the details of the service to anyone other than the introducer/member of our shop. \
+            \n\n・New customers <b>introduced by current members</b> cannot use <u>direct transactions</u>. \
+            \n\nCurrently, we are not <u> direct dealings with customers other than those who are <b>directly invited by our shop</b>. </u> Please acknowledge it beforehand. \
+            \n\n・A society that has cultivated order based on common sense knowledge will take time to accept the truth. \
+            \n\n・Don't be impatient with changes in social values, please enjoy yourself smartly and modestly. \
+            \n\n・ As a member privilege, you will be able to receive special preferential treatment at <b>permanently cheap prices</b> when you open a physical store in the future <u>domestic law revision</u> or overseas. \
+            \n\n・If you agree to <b>all of the above</b>, please proceed to <u>next</u>.",
+                   LANGUAGE,
+                   ),
+        parse_mode="html",
+        reply_markup=register_menu()
+    )
+
+    bot.send_photo(
+        msg.from_user.id,
+        photo="https://ibb.co/J3Q7Q8k",
+        allow_sending_without_reply=True,
+    )
 
 
 def get_name(msg):
@@ -143,7 +179,7 @@ def get_secret_answer(msg):
 
 
 # Callback Handlers
-@bot.callback_query_handler(func=lambda c: c.data in ["male", "female"])
+@bot.callback_query_handler(func=lambda c: c.data in ["male", "female", "continue", "quit"])
 def register_callback_answer(call):
     """
     Button Response
@@ -171,6 +207,22 @@ def register_callback_answer(call):
             )
 
             bot.register_next_step_handler(question, get_secret_question)
+
+    elif call.data == "continue":
+
+        bot.delete_message(call.from_user.id, call.message.message_id)
+
+        question = bot.send_photo(
+            call.from_user.id,
+            photo="https://ibb.co/mXBzyt8",
+            caption=get_string("Input your nickname here 👇", LANGUAGE),
+        )
+
+        bot.register_next_step_handler(question, get_name)
+
+    elif call.data == "quit":
+
+        bot.delete_message(call.from_user.id, call.message.message_id)
 
     else:
         print("invalid callback passed")

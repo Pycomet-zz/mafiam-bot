@@ -24,7 +24,7 @@ LANGUAGE = user.language
 # # Language setup
 # os.environ["LANGUAGE"] = "en"
 # LANGUAGE = os.getenv("LANGUAGE")
-translator = GoogleTranslator(source="auto")
+translator = GoogleTranslator(source="auto", target="ja")
 # translator = goslate.Goslate()
 
 # Logging Setup

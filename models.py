@@ -11,7 +11,8 @@ class User:
     language: str = "en"
 
 
-@dataclass_json(letter_case=LetterCase.CAMEL)  ## To camel case in Json for exports
+# To camel case in Json for exports
+@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
 class Account:
     "Account Model For Registering Users"

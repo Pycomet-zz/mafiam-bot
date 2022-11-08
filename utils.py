@@ -5,8 +5,11 @@ from models import *
 def get_string(text: str, lang: str) -> str:
     "Return The Test In LangugaE String"
     try:
-        result = translator.translate(text, target=lang)
-        return result
+        if lang == "ja":
+            result = translator.translate(text)
+            return result
+        else:
+            return text
     except:
         return text
 

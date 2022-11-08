@@ -6,7 +6,7 @@ def menu5():
     keyboard = types.InlineKeyboardMarkup(row_width=1)
     a = types.InlineKeyboardButton(text="English - EN", callback_data="en")
     b = types.InlineKeyboardButton(
-        text=get_string("Chinese - ZH", "zh"), callback_data="zh"
+        text=get_string("Japanese - JA", "ja"), callback_data="ja"
     )
     keyboard.add(a, b)
     return keyboard
@@ -35,8 +35,8 @@ def lang_callback_answer(call):
         user.language = "en"
         LANGUAGE = user.language
 
-    elif call.data == "zh":
-        user.language = "zh"
+    elif call.data == "ja":
+        user.language = "ja"
         LANGUAGE = user.language
 
     else:

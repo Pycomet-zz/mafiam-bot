@@ -19,7 +19,7 @@ def start_menu(status: bool):
     return keyboard
 
 
-def start_menu2():
+def start_menu2(status: bool):
     keyboard = types.InlineKeyboardMarkup(row_width=2)
     a = types.InlineKeyboardButton(
         text=get_string("Register Account", LANGUAGE), callback_data="register"
@@ -33,7 +33,14 @@ def start_menu2():
     d = types.InlineKeyboardButton(
         text=get_string("Main Menu", LANGUAGE), callback_data="back"
     )
-    keyboard.add(a, b, c, d)
+    e = types.InlineKeyboardButton(
+        text=get_string("Activate Your Invitation", LANGUAGE), callback_data="invite"
+    )
+    if status:
+        keyboard.add(a, b, c, d)
+    else:
+        keyboard.add(e)
+
     return keyboard
 
 
@@ -55,10 +62,10 @@ def startbot(msg):
             msg.from_user.id,
             photo="https://ibb.co/nm9NTpZ",
             caption=get_string(
-                "You are not a registered user to this bot and as such, can not view it's content.\n\n Click /invitecode to validate your access with a referral code and have access to all the bot's commands.",
+                f"🤡 Welcome {msg.from_user.first_name}, \n\nIf you are invited, follow these instructions; \n\n- Click /invitecode or  button below \n- Enter your invitation code \n\nFor access to all the bot's services and commands.",
                 LANGUAGE,
             ),
-            reply_markup=start_menu(False),
+            reply_markup=start_menu2(False),
             parse_mode="html",
         )
 
@@ -94,7 +101,7 @@ def startbot(msg):
             video=open("assets/vid0.mp4", "rb"),
             supports_streaming=True,
             allow_sending_without_reply=True,
-            reply_markup=start_menu2(),
+            reply_markup=start_menu2(True),
         )
 
         bot.send_photo(

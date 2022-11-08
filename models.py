@@ -8,7 +8,7 @@ from datetime import date
 class User:
     "User Class Repr"
     id: int = 0
-    language: str = "en"
+    language: str = "ja"
 
 
 # To camel case in Json for exports

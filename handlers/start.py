@@ -98,7 +98,7 @@ def startbot(msg):
         bot.send_chat_action(msg.from_user.id, "typing")
         bot.send_video(
             msg.from_user.id,
-            video=open("assets/vid0.mp4", "rb"),
+            video=open("assets/vid2.mp4", "rb"),
             supports_streaming=True,
             allow_sending_without_reply=True,
             reply_markup=start_menu2(True),

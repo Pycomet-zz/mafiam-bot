@@ -24,6 +24,7 @@ class Account:
     secret_answer: str = ""
     account_type: str = ""
     code: str = ""
+    active: bool = False
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)

@@ -5,11 +5,11 @@ from utils import *
 def start_menu(status: bool):
     keyboard = types.InlineKeyboardMarkup(row_width=1)
     a = types.InlineKeyboardButton(
-        text=get_string("Visit Website", LANGUAGE), url="www.google.com"
+        text=get_string("Open Website", LANGUAGE), url="www.google.com"
     )
 
     b = types.InlineKeyboardButton(
-        text=get_string("Open Chat", LANGUAGE), url="www.google.com"
+        text=get_string("Login Account", LANGUAGE), callback_data="login"
     )
 
     if status == False:
